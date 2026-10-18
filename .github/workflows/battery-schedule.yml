@@ -1,1 +1,45 @@
+name: Fox ESS Mode Scheduler Toggle
 
+on:
+  schedule:
+    # 9:45 AM Sydney coverage (AEDT + AEST)
+    - cron: '45 22 * * *'   # 22:45 UTC = 9:45 AM AEDT
+    - cron: '45 23 * * *'   # 23:45 UTC = 9:45 AM AEST
+
+    # 9:00 PM Sydney coverage (AEDT + AEST)
+    - cron: '0 10 * * *'    # 10:00 UTC = 9:00 PM AEDT
+    - cron: '0 11 * * *'    # 11:00 UTC = 9:00 PM AEST
+
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Force action'
+        required: true
+        type: choice
+        options:
+          - off
+          - on
+
+jobs:
+  toggle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install foxesscloud requests matplotlib
+
+      - name: Run
+        env:
+          FOX_API_KEY: ${{ secrets.FOX_API_KEY }}
+          FOX_DEVICE_SN: ${{ secrets.FOX_DEVICE_SN }}
+        run: |
+          if [ -n "${{ github.event.inputs.action }}" ]; then
+            python scheduler.py ${{ github.event.inputs.action }}
+          else
+            python scheduler.py
+          fi
