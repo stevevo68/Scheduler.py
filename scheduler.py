@@ -23,15 +23,15 @@ def main():
     print(f"Sydney time : {now.strftime('%Y-%m-%d %H:%M %Z')}")
     print(f"Inverter SN : {device_sn}")
 
-    # Manual force from the Run workflow button
+    # Manual force from workflow dispatch or cron trigger
     if len(sys.argv) > 1:
         action = sys.argv[1].lower()
         print(f"Manual action: {action}")
     else:
-        # Automatic based on current Sydney time
-        # 9:45 AM – 9:00 PM → ON
-        # 9:00 PM – 9:45 AM → OFF
-        if (hour > 9 or (hour == 9 and minute >= 45)) and hour < 21:
+        # Automatic fallback based on current Sydney time
+        # 10:00 AM – 9:00 PM → ON
+        # 9:00 PM – 10:00 AM → OFF
+        if hour >= 10 and hour < 21:
             action = "on"
         else:
             action = "off"
