@@ -19,6 +19,7 @@ on:
         options:
           - 'off'
           - 'on'
+          - 'smart-check'
 
 jobs:
   toggle:
