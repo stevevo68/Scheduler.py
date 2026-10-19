@@ -17,8 +17,8 @@ on:
         required: true
         type: choice
         options:
-          - off
-          - on
+          - 'off'
+          - 'on'
 
 jobs:
   toggle:
