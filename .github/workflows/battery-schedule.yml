@@ -2,9 +2,9 @@ name: Fox ESS Mode Scheduler Toggle
 
 on:
   schedule:
-    # 9:45 AM Sydney coverage (AEDT + AEST)
-    - cron: '45 22 * * *'   # 22:45 UTC = 9:45 AM AEDT
-    - cron: '45 23 * * *'   # 23:45 UTC = 9:45 AM AEST
+    # 10:00 AM Sydney coverage (AEDT + AEST)
+    - cron: '0 23 * * *'    # 23:00 UTC = 10:00 AM AEDT
+    - cron: '0 0 * * *'     # 00:00 UTC = 10:00 AM AEST
 
     # 9:00 PM Sydney coverage (AEDT + AEST)
     - cron: '0 10 * * *'    # 10:00 UTC = 9:00 PM AEDT
